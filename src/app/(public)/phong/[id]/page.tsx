@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PhoneIcon } from "lucide-react";
 import { getRoomById, getRelatedRooms } from "@/lib/rooms/room-fetchers";
-import { formatPrice, formatPriceMonth, formatArea, stripHtml } from "@/lib/format";
+import { formatPrice, formatPriceMonth, formatArea, stripHtml, maskPhones } from "@/lib/format";
 import { getDistrictLabel } from "@/lib/constants/hanoi-districts";
 import { getRoomTypeLabel } from "@/lib/constants/room-types";
 import { getAmenityLabel } from "@/lib/constants/amenities";
@@ -28,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const room = await getRoomById(id);
   if (!room) return { title: "Không tìm thấy phòng" };
   const metaDesc =
-    stripHtml(room.description).slice(0, 160) ||
+    maskPhones(stripHtml(room.description), SITE_CONFIG.phone).slice(0, 160) ||
     `${formatPriceMonth(room.price)} — ${getDistrictLabel(room.district)}`;
   return {
     title: room.title,
@@ -142,7 +141,9 @@ export default async function RoomDetailPage({ params }: Props) {
             <h2 className="font-semibold">Mô tả</h2>
             <div
               className="prose prose-sm dark:prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: room.description }}
+              dangerouslySetInnerHTML={{
+                __html: maskPhones(room.description, SITE_CONFIG.phone),
+              }}
             />
           </div>
         )}
@@ -157,22 +158,20 @@ export default async function RoomDetailPage({ params }: Props) {
 
         <Separator />
 
-        {/* Liên hệ — LUÔN dùng số tổng; khách liên hệ qua đây, admin điều phối sau */}
+        {/* Liên hệ xem phòng — qua Facebook (khách inbox, admin điều phối) */}
         <div className="flex flex-col gap-3">
           <h2 className="font-semibold">Liên hệ xem phòng</h2>
-          <div className="flex flex-wrap gap-2">
-            <a href={`tel:${SITE_CONFIG.phone}`} className={buttonVariants({ size: "sm" })}>
-              <PhoneIcon /> Gọi {SITE_CONFIG.phone}
-            </a>
-            <a
-              href={`https://zalo.me/${SITE_CONFIG.zalo}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={buttonVariants({ variant: "outline", size: "sm" })}
-            >
-              Zalo
-            </a>
-          </div>
+          <a
+            href={SITE_CONFIG.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants({ size: "sm" })}
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="size-4" aria-hidden="true">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+            Liên hệ qua Facebook
+          </a>
         </div>
 
         {/* Share */}
