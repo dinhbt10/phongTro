@@ -6,5 +6,5 @@ export const SITE_CONFIG = {
   zalo: "0843782559",
   facebook: "https://www.facebook.com/profile.php?id=100088818657555",
   area: "Hà Nội",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://phong-tro-nine.vercel.app",
 } as const;
