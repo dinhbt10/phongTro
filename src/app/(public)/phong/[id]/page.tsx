@@ -15,7 +15,6 @@ import { AmenityIcon } from "@/components/rooms/amenity-icon";
 import { RoomCard } from "@/components/rooms/room-card";
 import { StickyContactBar } from "@/components/rooms/sticky-contact-bar";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 interface Props {
@@ -161,14 +160,14 @@ export default async function RoomDetailPage({ params }: Props) {
         {/* Liên hệ xem phòng — Facebook + Zalo (khách inbox, admin điều phối) */}
         <div className="flex flex-col gap-3">
           <h2 className="font-semibold">Liên hệ xem phòng</h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             <a
               href={SITE_CONFIG.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className={buttonVariants({ size: "sm" })}
+              className="inline-flex h-10 items-center gap-2 rounded-lg bg-[#1877F2] px-5 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="size-4" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="size-5" aria-hidden="true">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
               </svg>
               Facebook
@@ -177,9 +176,9 @@ export default async function RoomDetailPage({ params }: Props) {
               href={`https://zalo.me/${SITE_CONFIG.zalo}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={buttonVariants({ variant: "outline", size: "sm" })}
+              className="inline-flex h-10 items-center gap-2 rounded-lg border-2 border-[#0068FF] px-5 text-sm font-semibold text-[#0068FF] transition-colors hover:bg-[#0068FF]/10"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="size-4" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="size-5" aria-hidden="true">
                 <path d="M12 2C6.477 2 2 5.94 2 10.8c0 2.77 1.46 5.24 3.75 6.86-.13.99-.6 2.3-1.3 3.34-.16.24.04.55.32.49 1.86-.42 3.3-1.06 4.2-1.57.88.2 1.8.31 2.73.31 5.523 0 10-3.94 10-8.8C22 5.94 17.523 2 12 2z" />
               </svg>
               Zalo
