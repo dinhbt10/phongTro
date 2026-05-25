@@ -18,16 +18,21 @@ export function ContactStatusSection({ form }: Props) {
 
   return (
     <Card>
-      <CardHeader><CardTitle>Liên hệ &amp; Trạng thái</CardTitle></CardHeader>
+      <CardHeader><CardTitle>Quản lý phụ trách &amp; Trạng thái</CardTitle></CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">
+        <p className="sm:col-span-2 rounded-md bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
+          ℹ️ Thông tin phụ trách <strong>chỉ admin thấy</strong>. Khách ngoài luôn liên hệ qua
+          số tổng <strong>0843782559</strong> — bạn điều phối sau.
+        </p>
+
         <div className="flex flex-col gap-1">
-          <Label htmlFor="contact_name">Tên liên hệ</Label>
-          <Input id="contact_name" {...register("contact_name")} placeholder="Anh Minh" />
+          <Label htmlFor="contact_name">Quản lý phụ trách</Label>
+          <Input id="contact_name" {...register("contact_name")} placeholder="Tên người phụ trách / CTV" />
         </div>
 
         <div className="flex flex-col gap-1">
-          <Label htmlFor="contact_phone">Số điện thoại</Label>
-          <Input id="contact_phone" type="tel" {...register("contact_phone")} placeholder="0912345678" />
+          <Label htmlFor="contact_phone">SĐT phụ trách (nội bộ)</Label>
+          <Input id="contact_phone" type="tel" {...register("contact_phone")} placeholder="SĐT thật của phòng" />
           {errors.contact_phone && (
             <p className="text-xs text-destructive">{errors.contact_phone.message}</p>
           )}

@@ -111,8 +111,13 @@ export function AdminRoomTable({ rooms }: Props) {
                       ) : <HomeIcon className="absolute inset-0 m-auto size-5 text-muted-foreground" />}
                     </div>
                   </td>
-                  <td className="px-3 py-2 max-w-[200px]">
+                  <td className="px-3 py-2 max-w-[220px]">
                     <p className="truncate font-medium">{room.title}</p>
+                    {(room.contact_name || room.contact_phone) && (
+                      <p className="truncate text-xs text-muted-foreground">
+                        Phụ trách: {[room.contact_name, room.contact_phone].filter(Boolean).join(" · ")}
+                      </p>
+                    )}
                   </td>
                   <td className="px-3 py-2 whitespace-nowrap">{formatPriceMonth(room.price)}</td>
                   <td className="px-3 py-2 whitespace-nowrap">{getDistrictLabel(room.district)}</td>
@@ -141,6 +146,11 @@ export function AdminRoomTable({ rooms }: Props) {
               <div className="flex flex-1 flex-col gap-1 overflow-hidden">
                 <p className="truncate font-medium text-sm">{room.title}</p>
                 <p className="text-xs text-muted-foreground">{getDistrictLabel(room.district)} · {formatPriceMonth(room.price)}</p>
+                {(room.contact_name || room.contact_phone) && (
+                  <p className="truncate text-xs text-muted-foreground">
+                    Phụ trách: {[room.contact_name, room.contact_phone].filter(Boolean).join(" · ")}
+                  </p>
+                )}
                 <RoomStatusBadge status={room.status} />
               </div>
               <RoomActions room={room} onDelete={setDeleteId} onDuplicate={handleDuplicate} onStatus={handleStatus} isPending={isPending} />

@@ -2,7 +2,7 @@
 export const SITE_CONFIG = {
   brand: "Phòng Trọ Hà Nội",
   slogan: "Tìm phòng trọ ưng ý tại Hà Nội — nhanh, dễ, tiết kiệm",
-  phone: "0843782559",
+  phone: "0869639826",
   zalo: "0843782559",
   facebook: "https://www.facebook.com/profile.php?id=100088818657555",
   area: "Hà Nội",

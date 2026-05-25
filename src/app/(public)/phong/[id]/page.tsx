@@ -6,6 +6,7 @@ import { formatPrice, formatPriceMonth, formatArea, stripHtml } from "@/lib/form
 import { getDistrictLabel } from "@/lib/constants/hanoi-districts";
 import { getRoomTypeLabel } from "@/lib/constants/room-types";
 import { getAmenityLabel } from "@/lib/constants/amenities";
+import { SITE_CONFIG } from "@/lib/constants/site-config";
 import { ROOM_STATUS_LABEL } from "@/lib/types/room";
 import { RoomGallery } from "@/components/rooms/room-gallery";
 import { VideoEmbed } from "@/components/rooms/video-embed";
@@ -156,25 +157,22 @@ export default async function RoomDetailPage({ params }: Props) {
 
         <Separator />
 
-        {/* Contact */}
+        {/* Liên hệ — LUÔN dùng số tổng; khách liên hệ qua đây, admin điều phối sau */}
         <div className="flex flex-col gap-3">
-          <h2 className="font-semibold">Liên hệ</h2>
-          {room.contact_name && <p className="text-sm">{room.contact_name}</p>}
-          {room.contact_phone && (
-            <div className="flex flex-wrap gap-2">
-              <a href={`tel:${room.contact_phone}`} className={buttonVariants({ size: "sm" })}>
-                <PhoneIcon /> Gọi {room.contact_phone}
-              </a>
-              <a
-                href={`https://zalo.me/${room.contact_phone}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={buttonVariants({ variant: "outline", size: "sm" })}
-              >
-                Zalo
-              </a>
-            </div>
-          )}
+          <h2 className="font-semibold">Liên hệ xem phòng</h2>
+          <div className="flex flex-wrap gap-2">
+            <a href={`tel:${SITE_CONFIG.phone}`} className={buttonVariants({ size: "sm" })}>
+              <PhoneIcon /> Gọi {SITE_CONFIG.phone}
+            </a>
+            <a
+              href={`https://zalo.me/${SITE_CONFIG.zalo}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              Zalo
+            </a>
+          </div>
         </div>
 
         {/* Share */}
@@ -199,8 +197,8 @@ export default async function RoomDetailPage({ params }: Props) {
         )}
       </div>
 
-      {/* Thanh liên hệ cố định (mobile only) */}
-      {room.contact_phone && <StickyContactBar phone={room.contact_phone} />}
+      {/* Thanh liên hệ cố định (mobile only) — luôn dùng số tổng */}
+      <StickyContactBar />
     </div>
   );
 }
