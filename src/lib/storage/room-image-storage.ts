@@ -1,6 +1,6 @@
 // Helpers xử lý file ảnh trên Supabase Storage bucket "room-images".
 import "server-only";
-import { createServiceClient } from "@/lib/supabase/service";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 const BUCKET = "room-images";
 
@@ -18,12 +18,14 @@ export function extractStoragePath(publicUrl: string): string {
 
 /**
  * Xóa nhiều object trên Storage theo path list.
- * Dùng service client để bỏ qua RLS.
+ * Dùng client đã đăng nhập (admin) — RLS cho phép authenticated xóa.
  */
-export async function deleteStorageObjects(paths: string[]): Promise<void> {
+export async function deleteStorageObjects(
+  supabase: SupabaseClient,
+  paths: string[],
+): Promise<void> {
   if (!paths.length) return;
-  const service = createServiceClient();
-  const { error } = await service.storage.from(BUCKET).remove(paths);
+  const { error } = await supabase.storage.from(BUCKET).remove(paths);
   if (error) {
     console.error("[storage] deleteStorageObjects error:", error.message);
   }

@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { getUser } from "@/lib/auth/get-session";
 import { createClient } from "@/lib/supabase/server";
-import { createServiceClient } from "@/lib/supabase/service";
 import {
   extractStoragePath,
   deleteStorageObjects,
@@ -88,7 +87,6 @@ export async function updateRoom(
 export async function deleteRoom(id: string): Promise<void> {
   await assertAuth();
   const supabase = await createClient();
-  const service = createServiceClient();
 
   // Lấy URL ảnh của phòng này
   const { data: ownImages } = await supabase
@@ -104,7 +102,7 @@ export async function deleteRoom(id: string): Promise<void> {
 
   // Chỉ xóa file Storage nếu không còn phòng nào khác tham chiếu
   if (ownUrls.length > 0) {
-    const { data: stillReferenced } = await service
+    const { data: stillReferenced } = await supabase
       .from("room_images")
       .select("url")
       .in("url", ownUrls);
@@ -112,7 +110,7 @@ export async function deleteRoom(id: string): Promise<void> {
     const toDelete = ownUrls
       .filter((u) => !referencedSet.has(u))
       .map(extractStoragePath);
-    await deleteStorageObjects(toDelete);
+    await deleteStorageObjects(supabase, toDelete);
   }
 
   revalidateAll();
